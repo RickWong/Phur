@@ -2,7 +2,7 @@
 /**
  * @author Rick Wong <rick@webambition.nl>
  * @package phpp
- * @version $Id$
+ * @version $Format:%h%
  */
 namespace phpp\Factory;
 

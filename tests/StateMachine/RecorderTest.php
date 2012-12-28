@@ -2,7 +2,7 @@
 /**
  * @author Rick Wong <rick@webambition.nl>
  * @package phpp
- * @version $Id$
+ * @version $Format:%h%
  */
 class phpp_StateMachine_RecorderTest extends\PHPUnit_Framework_TestCase
 {
