@@ -1,14 +1,22 @@
 {
     "name": "rickwong/phpp",
     "description": "phpp - PHP Patterns",
+    "keywords": ["patterns", "framework", "factory", "fsm", "statemachine"],
+    "homepage": "https://github.com/RickWong/phpp",
     "authors": [
         {
             "name": "Rick Wong",
             "email": "rick@webambition.nl"
         }
     ],
+    "license": "BSD-2-Clause",
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
         "phake/phake": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "phpp\\": ""
+        }
     }
 }
