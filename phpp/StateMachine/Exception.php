@@ -4,4 +4,4 @@
  */
 namespace phpp\StateMachine;
 
-class Exception extends \Exception {}
+class Exception extends \phpp\Exception {}

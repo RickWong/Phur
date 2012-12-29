@@ -4,7 +4,7 @@
  */
 namespace phpp\StateMachine;
 
-class Machine 
+class Machine
 {
 	/**
 	 * @var IState
@@ -12,11 +12,14 @@ class Machine
 	private $currentState;
 
 	/**
-	 * @var IState $initialState
+	 * @var IState $initialState (Optional)
 	 */
-	public function __construct (IState $initialState)
+	public function __construct (IState $initialState = NULL)
 	{
-		$this->changeState($initialState);
+		if ($initialState)
+		{
+			$this->changeState($initialState);
+		}
 	}
 
 	/**

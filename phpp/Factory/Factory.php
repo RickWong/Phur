@@ -22,7 +22,7 @@ class Factory
 	 */
 	public function __construct ($productInterface = NULL, array $productConstructorArgs = array())
 	{
-		$this->productInterface       = $productInterface ?: "\phpp\Factory\IProduct";
+		$this->productInterface       = $productInterface ?: '\phpp\Factory\IProduct';
 		$this->productConstructorArgs = $productConstructorArgs;
 	}
 
@@ -32,14 +32,14 @@ class Factory
 	 * 
 	 * @return IProduct
 	 */
-	public function produce ($productClassName, array $extraConstructorArgs = array())
+	public function create ($productClassName, array $extraConstructorArgs = array())
 	{
 		if (!$productClassName instanceof $this->productInterface)
 		{
 			return NULL;
 		}
 
-		$allConstructorAgs = array_merge($this->productConstructorArgs, $extraConstructorArgs);
+		$allConstructorArgs = array_merge($this->productConstructorArgs, $extraConstructorArgs);
 
 		return call_user_func_array("$productClassName::__construct", $allConstructorArgs);
 	}
