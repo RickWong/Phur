@@ -4,12 +4,12 @@
  */
 namespace phpp\ChainOfResponsibility;
 
-interface IHandler
+interface ICommandHandler
 {
 	/**
 	 * @internal param mixed $argument1, ...
 	 *
 	 * @return mixed
 	 */
-	public function handleCommand ();
+	public function execute ();
 }

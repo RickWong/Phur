@@ -12,11 +12,11 @@ interface IState
 	public function onEnter ();
 
 	/**
-	 * @param Machine $runningMachine
+	 * @param StateMachine $runningMachine
 	 * 
 	 * @return mixed
 	 */
-	public function onExecute (Machine $runningMachine);
+	public function onExecute (StateMachine $runningMachine);
 
 	/**
 	 * @return void

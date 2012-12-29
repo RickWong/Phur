@@ -4,7 +4,7 @@
  */
 namespace phpp\StateMachine;
 
-class Machine
+class StateMachine
 {
 	/**
 	 * @var IState

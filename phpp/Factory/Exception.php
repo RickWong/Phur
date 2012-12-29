@@ -4,4 +4,6 @@
  */
 namespace phpp\Factory;
 
-class Exception extends \phpp\Exception {}
+class Exception extends \phpp\Exception
+{
+}

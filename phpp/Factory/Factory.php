@@ -4,7 +4,7 @@
  */
 namespace phpp\Factory;
 
-class Factory 
+class Factory
 {
 	/**
 	 * @var string
@@ -30,7 +30,7 @@ class Factory
 	 * @param string $productClassName
 	 * @param array $extraConstructorArgs (Optional)
 	 * 
-	 * @return IProduct
+	 * @return IFactoryProduct
 	 */
 	public function create ($productClassName, array $extraConstructorArgs = array())
 	{
@@ -41,6 +41,6 @@ class Factory
 
 		$allConstructorArgs = array_merge($this->productConstructorArgs, $extraConstructorArgs);
 
-		return call_user_func_array("$productClassName::__construct", $allConstructorArgs);
+		return call_user_func_array(array($productClassName, '__construct'), $allConstructorArgs);
 	}
 }

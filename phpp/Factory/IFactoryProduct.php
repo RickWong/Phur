@@ -4,7 +4,7 @@
  */
 namespace phpp\Factory;
 
-interface IProduct 
+interface IFactoryProduct
 {
 	public function __construct ();
 }

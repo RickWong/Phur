@@ -4,4 +4,6 @@
  */
 namespace phpp\ChainOfResponsibility;
 
-class Exception extends \phpp\Exception {}
+class Exception extends \phpp\Exception
+{
+}

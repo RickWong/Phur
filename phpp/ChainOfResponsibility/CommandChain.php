@@ -4,30 +4,28 @@
  */
 namespace phpp\ChainOfResponsibility;
 
-class Chain
+class CommandChain
 {
 	/**
-	 * @var IHandler[]
+	 * @var ICommandHandler[]
 	 */
-	private $handlers;
+	private $handlers = array();
 
 	/**
-	 * @parma IHandler[] $handler1, ...
+	 * @parma ICommandHandler[] $handlers
 	 */
 	public function __construct (array $handlers = array())
 	{
-		$this->handlers = array();
-
 		foreach ($handlers as $handler)
 		{
-			$this->addCommand($handler);
+			$this->addHandler($handler);
 		}
 	}
 
 	/**
-	 * @param IHandler $handler
+	 * @param ICommandHandler $handler
 	 */
-	public function addCommand (IHandler $handler)
+	public function addHandler (ICommandHandler $handler)
 	{
 		$this->handlers[] = $handler;
 	}
@@ -37,13 +35,13 @@ class Chain
 	 *
 	 * @return mixed
 	 *
-	 * @throws Exception
+	 * @throws \phpp\ChainOfResponsibility\Exception
 	 */
-	public function handleCommand ()
+	public function execute ()
 	{
 		foreach ($this->handlers as $handler)
 		{
-			$result = call_user_func_array(array($handler, "handleCommand"), func_get_args());
+			$result = call_user_func_array(array($handler, 'execute'), func_get_args());
 
 			if ($result)
 			{
@@ -51,6 +49,6 @@ class Chain
 			}
 		}
 
-		throw new Exception("Chain failed to handle command!");
+		throw new Exception('Chain failed to handle command!');
 	}
 }
