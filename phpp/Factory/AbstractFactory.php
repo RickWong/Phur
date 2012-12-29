@@ -4,7 +4,7 @@
  */
 namespace phpp\Factory;
 
-abstract class Factory
+abstract class AbstractFactory
 {
 	/**
 	 * @var string
@@ -28,7 +28,7 @@ abstract class Factory
 	 * @param string $productClassName
 	 * @param array $extraConstructorArgs (Optional)
 	 * 
-	 * @return mixed|IFactoryProduct
+	 * @return mixed|null
 	 */
 	public function create ($productClassName, array $extraConstructorArgs = array())
 	{
