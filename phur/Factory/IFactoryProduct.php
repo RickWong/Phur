@@ -2,7 +2,7 @@
 /**
  * @author Rick Wong <rick@webambition.nl>
  */
-namespace phpp\Factory;
+namespace Phur\Factory;
 
 interface IFactoryProduct
 {

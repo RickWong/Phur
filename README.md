@@ -1,4 +1,4 @@
-phpp – PHP Patterns
+Phur – PHP Patterns
 -------------------
 
 Licensed under the BSD (Berkeley Software Distribution) License.

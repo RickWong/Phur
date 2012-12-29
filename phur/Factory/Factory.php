@@ -2,7 +2,7 @@
 /**
  * @author Rick Wong <rick@webambition.nl>
  */
-namespace phpp\Factory;
+namespace Phur\Factory;
 
 class Factory
 {
@@ -22,7 +22,7 @@ class Factory
 	 */
 	public function __construct ($productInterface = NULL, array $productConstructorArgs = array())
 	{
-		$this->productInterface       = $productInterface ?: '\phpp\Factory\IFactoryProduct';
+		$this->productInterface       = $productInterface ?: '\Phur\Factory\IFactoryProduct';
 		$this->productConstructorArgs = $productConstructorArgs;
 	}
 
@@ -32,7 +32,7 @@ class Factory
 	 *
 	 * @return mixed
 	 *
-	 * @throws \phpp\Factory\Exception
+	 * @throws \Phur\Factory\Exception
 	 */
 	public function create ($productClassName, array $extraConstructorArgs = array())
 	{

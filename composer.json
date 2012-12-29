@@ -1,8 +1,8 @@
 {
-    "name": "rickwong/phpp",
-    "description": "phpp - PHP Patterns",
+    "name": "rickwong/Phur",
+    "description": "Phur – Phur helps u refactor",
     "keywords": ["patterns", "framework", "factory", "fsm", "statemachine"],
-    "homepage": "https://github.com/RickWong/phpp",
+    "homepage": "https://github.com/RickWong/Phur",
     "authors": [
         {
             "name": "Rick Wong",
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-0": {
-            "phpp\\": ""
+            "Phur\\": ""
         }
     }
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="tests/bootstrap.php" colors="true">
 	<testsuites>
-		<testsuite name="phpp unit tests">
+		<testsuite name="Phur unit tests">
 			<directory suffix="Test.php">tests</directory>
 		</testsuite>
 	</testsuites>
 	<filter>
 		<whitelist>
-			<directory>phpp</directory>
+			<directory>Phur</directory>
 		</whitelist>
 	</filter>
 </phpunit>

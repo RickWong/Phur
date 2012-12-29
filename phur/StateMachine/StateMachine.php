@@ -2,7 +2,7 @@
 /**
  * @author Rick Wong <rick@webambition.nl>
  */
-namespace phpp\StateMachine;
+namespace Phur\StateMachine;
 
 class StateMachine
 {
@@ -50,7 +50,7 @@ class StateMachine
 	/**
 	 * @return mixed
 	 * 
-	 * @throws \phpp\StateMachine\Exception
+	 * @throws \Phur\StateMachine\Exception
 	 */
 	public function execute ()
 	{

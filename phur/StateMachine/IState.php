@@ -2,7 +2,7 @@
 /**
  * @author Rick Wong <rick@webambition.nl>
  */
-namespace phpp\StateMachine;
+namespace Phur\StateMachine;
 
 interface IState 
 {

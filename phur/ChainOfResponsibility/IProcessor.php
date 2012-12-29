@@ -2,7 +2,7 @@
 /**
  * @author Rick Wong <rick@webambition.nl>
  */
-namespace phpp\ChainOfResponsibility;
+namespace Phur\ChainOfResponsibility;
 
 interface IProcessor
 {

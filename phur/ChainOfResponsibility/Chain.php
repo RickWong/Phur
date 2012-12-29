@@ -2,7 +2,7 @@
 /**
  * @author Rick Wong <rick@webambition.nl>
  */
-namespace phpp\ChainOfResponsibility;
+namespace Phur\ChainOfResponsibility;
 
 class Chain
 {
@@ -12,7 +12,7 @@ class Chain
 	private $processors = array();
 
 	/**
-	 * @parma IProcessor[] $processors
+	 * @param IProcessor[] $processors
 	 */
 	public function __construct (array $processors = array())
 	{

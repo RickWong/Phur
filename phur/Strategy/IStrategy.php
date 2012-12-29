@@ -2,7 +2,7 @@
 /**
  * @author Rick Wong <rick@webambition.nl>
  */
-namespace phpp\Strategy;
+namespace Phur\Strategy;
 
 interface IStrategy
 {

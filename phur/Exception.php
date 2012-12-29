@@ -2,6 +2,6 @@
 /**
  * @author Rick Wong <rick@webambition.nl>
  */
-namespace phpp;
+namespace Phur;
 
 class Exception extends \Exception {}
