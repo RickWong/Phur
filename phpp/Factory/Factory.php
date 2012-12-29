@@ -4,12 +4,12 @@
  */
 namespace phpp\Factory;
 
-class Factory
+abstract class Factory
 {
 	/**
 	 * @var string
 	 */
-	private $productInterface;
+	protected $productInterface = '\phpp\Factory\IFactoryProduct';
 
 	/**
 	 * @var array
@@ -17,12 +17,10 @@ class Factory
 	private $productConstructorArgs;
 
 	/**
-	 * @param string $productInterface (Optional)
 	 * @param array $productConstructorArgs (Optional)
 	 */
-	public function __construct ($productInterface = NULL, array $productConstructorArgs = array())
+	public function __construct (array $productConstructorArgs = array())
 	{
-		$this->productInterface       = $productInterface ?: '\phpp\Factory\IProduct';
 		$this->productConstructorArgs = $productConstructorArgs;
 	}
 
@@ -30,7 +28,7 @@ class Factory
 	 * @param string $productClassName
 	 * @param array $extraConstructorArgs (Optional)
 	 * 
-	 * @return IFactoryProduct
+	 * @return mixed|IFactoryProduct
 	 */
 	public function create ($productClassName, array $extraConstructorArgs = array())
 	{

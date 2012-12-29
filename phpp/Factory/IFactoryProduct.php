@@ -6,5 +6,8 @@ namespace phpp\Factory;
 
 interface IFactoryProduct
 {
+	/**
+	 * Public constructor
+	 */
 	public function __construct ();
 }

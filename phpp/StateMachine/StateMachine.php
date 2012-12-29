@@ -39,12 +39,12 @@ class StateMachine
 	{
 		if ($this->currentState)
 		{
-			$this->currentState->onExit();
+			$this->currentState->after();
 		}
 
 		$this->currentState = $newState;
 
-		return $this->currentState->onEnter();
+		return $this->currentState->before();
 	}
 
 	/**
@@ -59,6 +59,6 @@ class StateMachine
 			throw new Exception("No current state to execute!");
 		}
 
-		return $this->currentState->onExecute($this);
+		return $this->currentState->execute($this);
 	}
 }

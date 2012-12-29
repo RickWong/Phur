@@ -9,19 +9,19 @@ interface IState
 	/**
 	 * @return mixed
 	 */
-	public function onEnter ();
+	public function before ();
 
 	/**
 	 * @param StateMachine $runningMachine
 	 * 
 	 * @return mixed
 	 */
-	public function onExecute (StateMachine $runningMachine);
+	public function execute (StateMachine $runningMachine);
 
 	/**
 	 * @return void
 	 */
-	public function onExit ();
+	public function after ();
 
 	/**
 	 * Sleep
