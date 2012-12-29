@@ -12,9 +12,9 @@ class StrategicBehavior
 	private $currentStrategy;
 
 	/**
-	 * @param IStrategy $defaultStrategy (Optional)
+	 * @param IStrategy $defaultStrategy
 	 */
-	public function __construct (IStrategy $defaultStrategy = NULL)
+	public function __construct (IStrategy $defaultStrategy)
 	{
 		if ($defaultStrategy)
 		{

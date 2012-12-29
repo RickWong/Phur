@@ -6,6 +6,6 @@ class phpp_Strategy_StrategicBehaviorTest extends PHPUnit_Framework_TestCase
 {
 	public function testConstructor ()
 	{
-		new \phpp\Strategy\StrategicBehavior;
+		new \phpp\Strategy\StrategicBehavior(Phake::mock('\phpp\Strategy\IStrategy'));
 	}
 }

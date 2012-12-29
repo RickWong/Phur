@@ -35,6 +35,11 @@ class Chain
 	 */
 	public function execute (ICommand $command)
 	{
+		if (count($this->processors) === 0)
+		{
+			throw new Exception("Cannot execute a chain with zero processors!");
+		}
+
 		foreach ($this->processors as $processor)
 		{
 			$result = $processor->execute($this, $command);
