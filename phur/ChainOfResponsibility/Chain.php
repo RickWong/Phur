@@ -32,6 +32,8 @@ class Chain
 
 	/**
 	 * @param ICommand $command
+	 *
+	 * @throws \Phur\ChainOfResponsibility\Exception
 	 */
 	public function execute (ICommand $command)
 	{
