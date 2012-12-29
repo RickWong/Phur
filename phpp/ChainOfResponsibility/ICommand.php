@@ -4,6 +4,6 @@
  */
 namespace phpp\ChainOfResponsibility;
 
-class Exception extends \phpp\Exception
+interface ICommand
 {
 }

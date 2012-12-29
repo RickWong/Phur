@@ -13,9 +13,6 @@ class StrategicBehavior
 
 	/**
 	 * @param IStrategy $defaultStrategy (Optional)
-	 *
-	 * @throws \phpp\Strategy\Exception
-	 *
 	 */
 	public function __construct (IStrategy $defaultStrategy = NULL)
 	{
