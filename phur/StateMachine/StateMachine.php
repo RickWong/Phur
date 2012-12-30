@@ -12,22 +12,11 @@ class StateMachine
 	private $currentState;
 
 	/**
-	 * @var IState $initialState (Optional)
+	 * @var IState $initialState
 	 */
-	public function __construct (IState $initialState = NULL)
+	public function __construct (IState $initialState)
 	{
-		if ($initialState)
-		{
-			$this->changeState($initialState);
-		}
-	}
-
-	/**
-	 * @return IState
-	 */
-	public function getState ()
-	{
-		return $this->currentState;
+		$this->changeState($initialState);
 	}
 
 	/**
@@ -49,16 +38,9 @@ class StateMachine
 
 	/**
 	 * @return mixed
-	 * 
-	 * @throws \Phur\StateMachine\Exception
 	 */
 	public function execute ()
 	{
-		if (!$this->currentState) 
-		{
-			throw new Exception("No current state to execute!");
-		}
-
 		return $this->currentState->execute($this);
 	}
 }
