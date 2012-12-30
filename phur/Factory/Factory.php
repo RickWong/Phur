@@ -22,7 +22,7 @@ class Factory
 	 */
 	public function __construct ($productInterface = NULL, array $productConstructorArgs = array())
 	{
-		$this->productInterface       = $productInterface ?: '\Phur\Factory\IFactoryProduct';
+		$this->productInterface       = $productInterface ?: '\Phur\Factory\IProduct';
 		$this->productConstructorArgs = $productConstructorArgs;
 	}
 
@@ -38,7 +38,7 @@ class Factory
 	{
 		if (!$productClassName instanceof $this->productInterface)
 		{
-			throw new Exception("$productClassName must implement $this->productInterface!");
+			throw new Exception("$productClassName must be an instance of $this->productInterface!");
 		}
 
 		$allConstructorArgs = array_merge($this->productConstructorArgs, $extraConstructorArgs);

@@ -16,10 +16,7 @@ class StrategicBehavior
 	 */
 	public function __construct (IStrategy $defaultStrategy)
 	{
-		if ($defaultStrategy)
-		{
-			$this->changeStrategy($defaultStrategy);
-		}
+		$this->changeStrategy($defaultStrategy);
 	}
 
 	/**
@@ -31,9 +28,11 @@ class StrategicBehavior
 	}
 
 	/**
+	 * @param mixed $argument1,...
+	 *
 	 * @return mixed
 	 */
-	public function execute ()
+	public function execute ($argument1 = NULL /*, ... */)
 	{
 		return call_user_func_array(array($this->currentStrategy, 'execute'), func_get_args());
 	}

@@ -4,7 +4,7 @@
  */
 namespace Phur\Factory;
 
-interface IFactoryProduct
+interface IProduct
 {
 	/**
 	 * Public constructor
