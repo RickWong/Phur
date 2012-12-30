@@ -24,14 +24,20 @@ class Chain
 
 	/**
 	 * @param IProcessor $processor
+	 *
+	 * @return int
 	 */
 	public function addProcessor (IProcessor $processor)
 	{
 		$this->processors[] = $processor;
+
+		return count($this->processors);
 	}
 
 	/**
 	 * @param ICommand $command
+	 *
+	 * @return bool
 	 *
 	 * @throws \Phur\ChainOfResponsibility\Exception
 	 */
@@ -39,21 +45,23 @@ class Chain
 	{
 		if (count($this->processors) === 0)
 		{
-			throw new Exception("Cannot execute a chain with zero processors!");
+			throw new Exception('Cannot execute a chain with zero processors!');
 		}
 
 		foreach ($this->processors as $processor)
 		{
-			$result = $processor->execute($this, $command);
+			$result = $processor->execute($command);
 
-			if (is_bool($result) && $result === FALSE)
+			if ($result === TRUE)
 			{
-				break;
+				return TRUE;
 			}
 			elseif ($result instanceof IProcessor)
 			{
 				$this->addProcessor($result);
 			}
 		}
+
+		return FALSE;
 	}
 }

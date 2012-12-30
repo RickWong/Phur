@@ -17,7 +17,7 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 	public function setUp ()
 	{
 		$this->state = Phake::mock('\Phur\StateMachine\IState');
-		Phake::when($this->state)->execute(Phake::anyParameters())->thenReturn('Happy state');
+		Phake::when($this->state)->execute(Phake::anyParameters())->thenReturn('United state!');
 
 		$this->statemachine = new \Phur\StateMachine\StateMachine($this->state);
 	}
@@ -40,8 +40,8 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 	{
 		$result = $this->statemachine->execute();
 
-		Phake::verify($this->state, Phake::times(1))->execute($this->statemachine);
+		Phake::verify($this->state)->execute($this->statemachine);
 
-		$this->assertSame('Happy state', $result);
+		$this->assertSame('United state!', $result);
 	}
 }

@@ -40,7 +40,7 @@ class Phur_Strategy_StrategicBehaviorTest extends PHPUnit_Framework_TestCase
 	{
 		$result = $this->behavior->execute(123, 456);
 
-		Phake::verify($this->strategy, Phake::times(1))->execute(123, 456);
+		Phake::verify($this->strategy)->execute(123, 456);
 
 		$this->assertSame('Profit!', $result);
 	}
