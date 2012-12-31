@@ -14,35 +14,55 @@ class Factory
 	/**
 	 * @var array
 	 */
-	private $productConstructorArgs;
+	private $defaultConstructorArgs;
 
 	/**
 	 * @param string $productInterface (Optional)
-	 * @param array $productConstructorArgs (Optional)
+	 * @param array $defaultConstructorArgs (Optional)
 	 */
-	public function __construct ($productInterface = NULL, array $productConstructorArgs = array())
+	public function __construct ($productInterface = NULL, array $defaultConstructorArgs = array())
 	{
 		$this->productInterface       = $productInterface ?: '\Phur\Factory\IProduct';
-		$this->productConstructorArgs = $productConstructorArgs;
+		$this->defaultConstructorArgs = $defaultConstructorArgs;
 	}
 
 	/**
 	 * @param string $productClassName
-	 * @param array  $extraConstructorArgs (Optional)
+	 * @param array  $constructorArgs (Optional)
+	 * @param bool   $appendToDefaultArgs (Optional)
 	 *
-	 * @return mixed
+	 * @return object
 	 *
 	 * @throws \Phur\Factory\Exception
 	 */
-	public function create ($productClassName, array $extraConstructorArgs = array())
+	public function create ($productClassName, array $constructorArgs = array(), $appendToDefaultArgs = TRUE)
 	{
-		if (!$productClassName instanceof $this->productInterface)
+		if (!class_implements($productClassName, $this->productInterface))
 		{
-			throw new Exception("$productClassName must be an instance of $this->productInterface!");
+			throw new Exception("$productClassName must implement interface $this->productInterface!");
 		}
 
-		$allConstructorArgs = array_merge($this->productConstructorArgs, $extraConstructorArgs);
+		if (count($constructorArgs) === 0)
+		{
+			$constructorArgs = $this->defaultConstructorArgs;
+		}
+		elseif ($appendToDefaultArgs)
+		{
+			$constructorArgs = array_merge($this->defaultConstructorArgs, $constructorArgs);
+		}
 
-		return call_user_func_array(array($productClassName, '__construct'), $allConstructorArgs);
+		return $this->_newInstance($productClassName, $constructorArgs);
+	}
+
+	/**
+	 * @param string $className
+	 * @param array $constructorArgs
+	 *
+	 * @return object
+	 */
+	protected function _newInstance ($className, $constructorArgs)
+	{
+		$refClass = new \ReflectionClass($className);
+		return $refClass->newInstanceArgs($constructorArgs);
 	}
 }
