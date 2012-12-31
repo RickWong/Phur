@@ -48,7 +48,20 @@ class Chain
 			throw new Exception('Cannot execute a chain with zero processors!');
 		}
 
-		foreach ($this->processors as $processor)
+		return $this->_executeProcessors($command, $this->processors);
+	}
+
+	/**
+	 * @param ICommand     $command
+	 * @param IProcessor[] $processors
+	 *
+	 * @return bool
+	 */
+	protected function _executeProcessors (ICommand $command, array $processors)
+	{
+		$appendedProcessors = array();
+
+		foreach ($processors as $processor)
 		{
 			$result = $processor->execute($command);
 
@@ -56,10 +69,15 @@ class Chain
 			{
 				return TRUE;
 			}
-			elseif ($result instanceof IProcessor)
+			elseif (is_object($result) && class_implements($result, '\Phur\ChainOfResponsibility\IProcessor'))
 			{
-				$this->addProcessor($result);
+				$appendedProcessors[] = $result;
 			}
+		}
+
+		if (count($appendedProcessors))
+		{
+			return $this->_executeProcessors($command, $appendedProcessors);
 		}
 
 		return FALSE;
