@@ -31,7 +31,8 @@ class Phur_ChainOfResponsibility_ChainTest extends PHPUnit_Framework_TestCase
 
 	public function setUp ()
 	{
-		$this->command         = new stdClass;
+		$this->command = new stdClass;
+
 		$this->processorTrue   = Phake::mock('\Phur\ChainOfResponsibility\IProcessor');
 		$this->processorFalse  = Phake::mock('\Phur\ChainOfResponsibility\IProcessor');
 		$this->processorAppend = Phake::mock('\Phur\ChainOfResponsibility\IProcessor');
@@ -40,12 +41,12 @@ class Phur_ChainOfResponsibility_ChainTest extends PHPUnit_Framework_TestCase
 		Phake::when($this->processorFalse)->execute($this->command)->thenReturn(FALSE);
 		Phake::when($this->processorAppend)->execute($this->command)->thenReturn($this->processorTrue);
 
-		$this->chain = new \Phur\ChainOfResponsibility\Chain(array($this->processorFalse));
+		$this->chain = new \Phur\ChainOfResponsibility\Chain($this->processorFalse);
 	}
 
 	public function testAddProcessorFailsWithNonIProcessor ()
 	{
-		$this->setExpectedException('PHPUnit_Framework_Error', 'must implement interface Phur\ChainOfResponsibility\IProcessor');
+		$this->setExpectedException('\Phur\ChainOfResponsibility\Exception', 'must implement interface \Phur\ChainOfResponsibility\IProcessor!');
 
 		$this->chain->addProcessor(new stdClass);
 	}

@@ -9,31 +9,31 @@ class StateMachine
 	/**
 	 * @var string
 	 */
-	protected $stateInterface;
+	protected $stateInterface = '\Phur\StateMachine\IState';
 
 	/**
-	 * @var IState
+	 * @var object
 	 */
 	protected $currentState;
 
 	/**
-	 * @var string $stateInterface
+	 * @param object $initialState
 	 */
-	public function __construct ($stateInterface = '\Phur\StateMachine\IState')
+	public function __construct ($initialState)
 	{
-		$this->stateInterface = $stateInterface;
+		$this->changeState($initialState);
 	}
 
 	/**
-	 * @param IState $newState
+	 * @param object $newState
 	 *
 	 * @return mixed
 	 *
 	 * @throws \Phur\StateMachine\Exception
 	 */
-	public function changeState (IState $newState)
+	public function changeState ($newState)
 	{
-		if (!$this->_isState($newState))
+		if (!$newState instanceof $this->stateInterface)
 		{
 			throw new Exception(get_class($newState)." must implement interface $this->stateInterface!");
 		}
@@ -50,33 +50,16 @@ class StateMachine
 
 	/**
 	 * @return mixed
-	 *
-	 * @throws \Phur\StateMachine\Exception
 	 */
 	public function execute ()
 	{
-		if (!$this->currentState)
-		{
-			throw new Exception('Cannot execute a stateless state machine!');
-		}
-
 		$result = $this->currentState->execute();
 
-		if ($this->_isState($result))
+		if (is_object($result) && $result instanceof $this->stateInterface)
 		{
 			return $this->changeState($result);
 		}
 
 		return $result;
-	}
-
-	/**
-	 * @param mixed $object
-	 *
-	 * @return bool
-	 */
-	protected function _isState ($object)
-	{
-		return is_subclass_of($object, $this->stateInterface, FALSE);
 	}
 }

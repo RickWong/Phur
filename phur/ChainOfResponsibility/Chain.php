@@ -7,28 +7,40 @@ namespace Phur\ChainOfResponsibility;
 class Chain
 {
 	/**
-	 * @var IProcessor[]
+	 * @var string
+	 */
+	protected $processorInterface = '\Phur\ChainOfResponsibility\IProcessor';
+
+	/**
+	 * @var object[]
 	 */
 	protected $processors = array();
 
 	/**
-	 * @param IProcessor[] $processors
+	 * @param object $processor1,...
 	 */
-	public function __construct (array $processors = array())
+	public function __construct ($processor1 = NULL /*, ...*/)
 	{
-		foreach ($processors as $processor)
+		foreach (func_get_args() as $processor)
 		{
 			$this->addProcessor($processor);
 		}
 	}
 
 	/**
-	 * @param IProcessor $processor
+	 * @param object $processor
 	 *
 	 * @return int
+	 *
+	 * @throws \Phur\ChainOfResponsibility\Exception
 	 */
-	public function addProcessor (IProcessor $processor)
+	public function addProcessor ($processor)
 	{
+		if (!$processor instanceof $this->processorInterface)
+		{
+			throw new Exception(get_class($processor)." must implement interface $this->processorInterface!");
+		}
+
 		$this->processors[] = $processor;
 
 		return count($this->processors);
@@ -52,8 +64,8 @@ class Chain
 	}
 
 	/**
-	 * @param mixed        $command
-	 * @param IProcessor[] $processors
+	 * @param mixed    $command
+	 * @param object[] $processors
 	 *
 	 * @return bool
 	 */
@@ -69,7 +81,7 @@ class Chain
 			{
 				return TRUE;
 			}
-			elseif ($this->_isProcessor($result))
+			elseif (is_object($result) && $result instanceof $this->processorInterface)
 			{
 				$appendedProcessors[] = $result;
 			}
@@ -81,15 +93,5 @@ class Chain
 		}
 
 		return FALSE;
-	}
-
-	/**
-	 * @param mixed $object
-	 *
-	 * @return bool
-	 */
-	protected function _isProcessor ($object)
-	{
-		return is_subclass_of($object, '\Phur\ChainOfResponsibility\IProcessor', FALSE);
 	}
 }

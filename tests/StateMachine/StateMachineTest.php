@@ -18,16 +18,14 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 	{
 		$this->state = Phake::mock('\Phur\StateMachine\IState');
 
-		$this->stateMachine = new \Phur\StateMachine\StateMachine;
-		$this->stateMachine->changeState($this->state);
+		$this->stateMachine = new \Phur\StateMachine\StateMachine($this->state);
 	}
 
-	public function testChangeStateOnlyAcceptsSpecificInterface ()
+	public function testChangeStateFailsWithNonIState ()
 	{
-		$this->setExpectedException('\Phur\StateMachine\Exception', 'must implement interface ISpecificInterface');
+		$this->setExpectedException('\Phur\StateMachine\Exception', 'must implement interface \Phur\StateMachine\IState!');
 
-		$specificMachine = new \Phur\StateMachine\StateMachine('ISpecificInterface');
-		$specificMachine->changeState($this->state);
+		$this->stateMachine->changeState(new stdClass);
 	}
 
 	public function testChangeStateWorks ()
@@ -41,14 +39,6 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 		Phake::verify($new_state)->before();
 
 		$this->assertSame('New state!', $result);
-	}
-
-	public function testExecuteFailsWithoutState ()
-	{
-		$this->setExpectedException('\Phur\StateMachine\Exception', 'Cannot execute a stateless state machine!');
-
-		$emptyMachine = new \Phur\StateMachine\StateMachine;
-		$emptyMachine->execute();
 	}
 
 	public function testExecuteWorks ()

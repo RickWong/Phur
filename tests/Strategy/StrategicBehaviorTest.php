@@ -22,16 +22,9 @@ class Phur_Strategy_StrategicBehaviorTest extends PHPUnit_Framework_TestCase
 		$this->behavior = new \Phur\Strategy\StrategicBehavior($this->strategy);
 	}
 
-	public function testConstructorFailsWithNonIStrategy ()
-	{
-		$this->setExpectedException('PHPUnit_Framework_Error', 'must implement interface Phur\Strategy\IStrategy');
-
-		new \Phur\Strategy\StrategicBehavior(new stdClass);
-	}
-
 	public function testChangeStrategyFailsWithNonIStrategy ()
 	{
-		$this->setExpectedException('PHPUnit_Framework_Error', 'must implement interface Phur\Strategy\IStrategy');
+		$this->setExpectedException('\Phur\Strategy\Exception', 'must implement interface \Phur\Strategy\IStrategy!');
 
 		$this->behavior->changeStrategy(new stdClass);
 	}

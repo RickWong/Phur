@@ -11,7 +11,7 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 
 	public function setUp ()
 	{
-		$this->factory = Phake::partialMock('\Phur\Factory\Factory', '\Phur\Factory\IProduct', array('default'));
+		$this->factory = Phake::partialMock('\Phur\Factory\Factory', 'default');
 	}
 
 	public function testCreateFailsWithNonIProduct ()
@@ -21,7 +21,7 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 		$this->factory->create('stdClass');
 	}
 
-	public function testCreateWorks ()
+	public function testCreateWorksWithDefaultArguments ()
 	{
 		$result = $this->factory->create('Phur_Factory_TestProduct');
 
@@ -30,20 +30,11 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('Phur_Factory_TestProduct', $result);
 	}
 
-	public function testCreateWorksWithCustomConstructorArgumentsAppended ()
+	public function testCreateWorksWithAdditionalConstructorArguments ()
 	{
-		$result = $this->factory->create('Phur_Factory_TestProduct', array('custom'));
+		$result = $this->factory->create('Phur_Factory_TestProduct', 'custom');
 
 		Phake::verify($this->factory)->_newInstance('Phur_Factory_TestProduct', array('default', 'custom'));
-
-		$this->assertInstanceOf('Phur_Factory_TestProduct', $result);
-	}
-
-	public function testCreateWorksWithCustomConstructorArgumentsInstead ()
-	{
-		$result = $this->factory->create('Phur_Factory_TestProduct', array('custom'), FALSE);
-
-		Phake::verify($this->factory)->_newInstance('Phur_Factory_TestProduct', array('custom'));
 
 		$this->assertInstanceOf('Phur_Factory_TestProduct', $result);
 	}

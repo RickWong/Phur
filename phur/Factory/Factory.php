@@ -9,54 +9,44 @@ class Factory
 	/**
 	 * @var string
 	 */
-	protected $productInterface;
+	protected $productInterface = '\Phur\Factory\IProduct';
 
 	/**
 	 * @var array
 	 */
-	protected $defaultConstructorArgs;
+	protected $defaultConstructorArgs = array();
 
 	/**
-	 * @param string $productInterface
-	 * @param array $defaultConstructorArgs
+	 * @param mixed $defaultConstructorArg1,...
 	 */
-	public function __construct ($productInterface = '\Phur\Factory\IProduct', array $defaultConstructorArgs = array())
+	public function __construct ($defaultConstructorArg1 = NULL /*, ...*/)
 	{
-		$this->productInterface       = $productInterface;
-		$this->defaultConstructorArgs = $defaultConstructorArgs;
+		$this->defaultConstructorArgs = func_get_args();
 	}
 
 	/**
 	 * @param string $productClassName
-	 * @param array  $constructorArgs
-	 * @param bool   $appendToDefaultArgs
+	 * @param mixed  $constructorArg1,...
 	 *
 	 * @return object
 	 *
 	 * @throws \Phur\Factory\Exception
 	 */
-	public function create ($productClassName, array $constructorArgs = array(), $appendToDefaultArgs = TRUE)
+	public function create ($productClassName, $constructorArg1 = NULL /*, ...*/)
 	{
 		if (!is_subclass_of($productClassName, $this->productInterface))
 		{
 			throw new Exception("$productClassName must implement interface $this->productInterface!");
 		}
 
-		if (count($constructorArgs) === 0)
-		{
-			$constructorArgs = $this->defaultConstructorArgs;
-		}
-		elseif ($appendToDefaultArgs)
-		{
-			$constructorArgs = array_merge($this->defaultConstructorArgs, $constructorArgs);
-		}
+		$constructorArgs = array_slice(func_get_args(), 1);
 
-		return $this->_newInstance($productClassName, $constructorArgs);
+		return $this->_newInstance($productClassName, array_merge($this->defaultConstructorArgs, $constructorArgs));
 	}
 
 	/**
 	 * @param string $className
-	 * @param array $constructorArgs
+	 * @param array  $constructorArgs
 	 *
 	 * @return object
 	 */
