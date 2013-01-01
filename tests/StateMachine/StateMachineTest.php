@@ -7,7 +7,7 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @var \Phur\StateMachine\StateMachine
 	 */
-	public $statemachine;
+	public $stateMachine;
 
 	/**
 	 * @var \Phur\StateMachine\IState
@@ -17,9 +17,8 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 	public function setUp ()
 	{
 		$this->state = Phake::mock('\Phur\StateMachine\IState');
-		Phake::when($this->state)->execute(Phake::anyParameters())->thenReturn('United state!');
 
-		$this->statemachine = new \Phur\StateMachine\StateMachine($this->state);
+		$this->stateMachine = new \Phur\StateMachine\StateMachine($this->state);
 	}
 
 	public function testConstructorFailsWithNonIState ()
@@ -33,15 +32,43 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 	{
 		$this->setExpectedException('PHPUnit_Framework_Error', 'must implement interface Phur\StateMachine\IState');
 
-		$this->statemachine->changeState(new stdClass);
+		$this->stateMachine->changeState(new stdClass);
+	}
+
+	public function testChangeStateCallsCurrentAfterAndNewBefore ()
+	{
+		$new_state = Phake::mock('\Phur\StateMachine\IState');
+		Phake::when($new_state)->before(Phake::anyParameters())->thenReturn('New state!');
+
+		$result = $this->stateMachine->changeState($new_state);
+
+		Phake::verify($this->state)->after();
+		Phake::verify($new_state)->before();
+
+		$this->assertSame('New state!', $result);
 	}
 
 	public function testExecuteState ()
 	{
-		$result = $this->statemachine->execute();
+		Phake::when($this->state)->execute(Phake::anyParameters())->thenReturn('United state!');
+		$result = $this->stateMachine->execute();
 
-		Phake::verify($this->state)->execute($this->statemachine);
+		Phake::verify($this->state)->execute();
 
 		$this->assertSame('United state!', $result);
+	}
+
+	public function testExecuteStateReceivesNewStateAndChangesToIt ()
+	{
+		$new_state = Phake::mock('\Phur\StateMachine\IState');
+		Phake::when($new_state)->before(Phake::anyParameters())->thenReturn('New state!');
+		Phake::when($this->state)->execute(Phake::anyParameters())->thenReturn($new_state);
+
+		$result = $this->stateMachine->execute();
+
+		Phake::verify($this->state)->execute();
+		Phake::verify($new_state)->before();
+
+		$this->assertSame('New state!', $result);
 	}
 }

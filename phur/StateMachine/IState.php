@@ -12,11 +12,9 @@ interface IState
 	public function before ();
 
 	/**
-	 * @param StateMachine $runningMachine
-	 * 
-	 * @return mixed
+	 * @return mixed|IState Returns result of state, or returns a new IState to change to
 	 */
-	public function execute (StateMachine $runningMachine);
+	public function execute ();
 
 	/**
 	 * @return void

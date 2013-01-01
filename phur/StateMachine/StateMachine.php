@@ -41,6 +41,13 @@ class StateMachine
 	 */
 	public function execute ()
 	{
-		return $this->currentState->execute($this);
+		$result = $this->currentState->execute();
+
+		if (is_object($result) && class_implements($result, '\Phur\StateMachine\IState'))
+		{
+			return $this->changeState($result);
+		}
+
+		return $result;
 	}
 }
