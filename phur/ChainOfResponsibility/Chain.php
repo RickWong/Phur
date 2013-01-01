@@ -35,13 +35,13 @@ class Chain
 	}
 
 	/**
-	 * @param ICommand $command
+	 * @param mixed $command
 	 *
 	 * @return bool
 	 *
 	 * @throws \Phur\ChainOfResponsibility\Exception
 	 */
-	public function execute (ICommand $command)
+	public function execute ($command)
 	{
 		if (count($this->processors) === 0)
 		{
@@ -52,12 +52,12 @@ class Chain
 	}
 
 	/**
-	 * @param ICommand     $command
+	 * @param mixed        $command
 	 * @param IProcessor[] $processors
 	 *
 	 * @return bool
 	 */
-	protected function _executeProcessors (ICommand $command, array $processors)
+	protected function _executeProcessors ($command, array $processors)
 	{
 		$appendedProcessors = array();
 

@@ -10,7 +10,7 @@ class Phur_ChainOfResponsibility_ChainTest extends PHPUnit_Framework_TestCase
 	public $chain;
 
 	/**
-	 * @var \Phur\ChainOfResponsibility\ICommand
+	 * @var object
 	 */
 	public $command;
 
@@ -31,7 +31,7 @@ class Phur_ChainOfResponsibility_ChainTest extends PHPUnit_Framework_TestCase
 
 	public function setUp ()
 	{
-		$this->command         = Phake::mock('\Phur\ChainOfResponsibility\ICommand');
+		$this->command         = new stdClass;
 		$this->processorTrue   = Phake::mock('\Phur\ChainOfResponsibility\IProcessor');
 		$this->processorFalse  = Phake::mock('\Phur\ChainOfResponsibility\IProcessor');
 		$this->processorAppend = Phake::mock('\Phur\ChainOfResponsibility\IProcessor');
