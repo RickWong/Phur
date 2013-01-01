@@ -40,7 +40,7 @@ class Phur_ChainOfResponsibility_ChainTest extends PHPUnit_Framework_TestCase
 		Phake::when($this->processorFalse)->execute($this->command)->thenReturn(FALSE);
 		Phake::when($this->processorAppend)->execute($this->command)->thenReturn($this->processorTrue);
 
-		$this->chain = new \Phur\ChainOfResponsibility\Chain;
+		$this->chain = new \Phur\ChainOfResponsibility\Chain(array($this->processorFalse));
 	}
 
 	public function testAddProcessorFailsWithNonIProcessor ()
@@ -54,10 +54,6 @@ class Phur_ChainOfResponsibility_ChainTest extends PHPUnit_Framework_TestCase
 	{
 		$result = $this->chain->addProcessor($this->processorTrue);
 
-		$this->assertSame(1, $result);
-
-		$result = $this->chain->addProcessor($this->processorTrue);
-
 		$this->assertSame(2, $result);
 	}
 
@@ -65,13 +61,12 @@ class Phur_ChainOfResponsibility_ChainTest extends PHPUnit_Framework_TestCase
 	{
 		$this->setExpectedException('\Phur\ChainOfResponsibility\Exception', 'Cannot execute a chain with zero processors!');
 
-		$this->chain->execute($this->command);
+		$emptyChain = new \Phur\ChainOfResponsibility\Chain;
+		$emptyChain->execute($this->command);
 	}
 
 	public function testExecuteWorksButNothingProcessed ()
 	{
-		$this->chain->addProcessor($this->processorFalse);
-
 		$result = $this->chain->execute($this->command);
 
 		Phake::verify($this->processorFalse)->execute($this->command);
@@ -81,7 +76,6 @@ class Phur_ChainOfResponsibility_ChainTest extends PHPUnit_Framework_TestCase
 
 	public function testExecuteWorksAndChainAppendedAndProcessed ()
 	{
-		$this->chain->addProcessor($this->processorFalse);
 		$this->chain->addProcessor($this->processorAppend);
 		$this->chain->addProcessor($this->processorFalse);
 

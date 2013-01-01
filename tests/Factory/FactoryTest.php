@@ -11,7 +11,7 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 
 	public function setUp ()
 	{
-		$this->factory = Phake::partialMock('\Phur\Factory\Factory', NULL, array('default'));
+		$this->factory = Phake::partialMock('\Phur\Factory\Factory', '\Phur\Factory\IProduct', array('default'));
 	}
 
 	public function testCreateFailsWithNonIProduct ()

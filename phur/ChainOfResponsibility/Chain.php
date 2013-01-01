@@ -9,7 +9,7 @@ class Chain
 	/**
 	 * @var IProcessor[]
 	 */
-	private $processors = array();
+	protected $processors = array();
 
 	/**
 	 * @param IProcessor[] $processors

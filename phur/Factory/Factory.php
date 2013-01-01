@@ -9,27 +9,27 @@ class Factory
 	/**
 	 * @var string
 	 */
-	private $productInterface;
+	protected $productInterface;
 
 	/**
 	 * @var array
 	 */
-	private $defaultConstructorArgs;
+	protected $defaultConstructorArgs;
 
 	/**
-	 * @param string $productInterface (Optional)
-	 * @param array $defaultConstructorArgs (Optional)
+	 * @param string $productInterface
+	 * @param array $defaultConstructorArgs
 	 */
-	public function __construct ($productInterface = NULL, array $defaultConstructorArgs = array())
+	public function __construct ($productInterface = '\Phur\Factory\IProduct', array $defaultConstructorArgs = array())
 	{
-		$this->productInterface       = $productInterface ?: '\Phur\Factory\IProduct';
+		$this->productInterface       = $productInterface;
 		$this->defaultConstructorArgs = $defaultConstructorArgs;
 	}
 
 	/**
 	 * @param string $productClassName
-	 * @param array  $constructorArgs (Optional)
-	 * @param bool   $appendToDefaultArgs (Optional)
+	 * @param array  $constructorArgs
+	 * @param bool   $appendToDefaultArgs
 	 *
 	 * @return object
 	 *
@@ -60,7 +60,7 @@ class Factory
 	 *
 	 * @return object
 	 */
-	protected function _newInstance ($className, $constructorArgs)
+	protected function _newInstance ($className, array $constructorArgs)
 	{
 		$refClass = new \ReflectionClass($className);
 		return $refClass->newInstanceArgs($constructorArgs);
