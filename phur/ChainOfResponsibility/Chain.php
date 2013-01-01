@@ -69,7 +69,7 @@ class Chain
 			{
 				return TRUE;
 			}
-			elseif (is_object($result) && class_implements($result, '\Phur\ChainOfResponsibility\IProcessor'))
+			elseif ($this->_isProcessor($result))
 			{
 				$appendedProcessors[] = $result;
 			}
@@ -81,5 +81,15 @@ class Chain
 		}
 
 		return FALSE;
+	}
+
+	/**
+	 * @param mixed $object
+	 *
+	 * @return bool
+	 */
+	protected function _isProcessor ($object)
+	{
+		return is_subclass_of($object, '\Phur\ChainOfResponsibility\IProcessor', FALSE);
 	}
 }

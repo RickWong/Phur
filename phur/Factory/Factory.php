@@ -37,7 +37,7 @@ class Factory
 	 */
 	public function create ($productClassName, array $constructorArgs = array(), $appendToDefaultArgs = TRUE)
 	{
-		if (!class_implements($productClassName, $this->productInterface))
+		if (!is_subclass_of($productClassName, $this->productInterface))
 		{
 			throw new Exception("$productClassName must implement interface $this->productInterface!");
 		}

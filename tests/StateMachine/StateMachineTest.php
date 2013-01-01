@@ -18,24 +18,19 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 	{
 		$this->state = Phake::mock('\Phur\StateMachine\IState');
 
-		$this->stateMachine = new \Phur\StateMachine\StateMachine($this->state);
+		$this->stateMachine = new \Phur\StateMachine\StateMachine;
+		$this->stateMachine->changeState($this->state);
 	}
 
-	public function testConstructorFailsWithNonIState ()
+	public function testChangeStateOnlyAcceptsSpecificInterface ()
 	{
-		$this->setExpectedException('PHPUnit_Framework_Error', 'must implement interface Phur\StateMachine\IState');
+		$this->setExpectedException('\Phur\StateMachine\Exception', 'must implement interface ISpecificInterface');
 
-		new \Phur\StateMachine\StateMachine(new stdClass);
+		$specificMachine = new \Phur\StateMachine\StateMachine('ISpecificInterface');
+		$specificMachine->changeState($this->state);
 	}
 
-	public function testChangeStateFailsWithNonIState ()
-	{
-		$this->setExpectedException('PHPUnit_Framework_Error', 'must implement interface Phur\StateMachine\IState');
-
-		$this->stateMachine->changeState(new stdClass);
-	}
-
-	public function testChangeStateCallsCurrentAfterAndNewBefore ()
+	public function testChangeStateWorks ()
 	{
 		$new_state = Phake::mock('\Phur\StateMachine\IState');
 		Phake::when($new_state)->before(Phake::anyParameters())->thenReturn('New state!');
@@ -48,9 +43,18 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 		$this->assertSame('New state!', $result);
 	}
 
-	public function testExecuteState ()
+	public function testExecuteFailsWithoutState ()
+	{
+		$this->setExpectedException('\Phur\StateMachine\Exception', 'Cannot execute a stateless state machine!');
+
+		$emptyMachine = new \Phur\StateMachine\StateMachine;
+		$emptyMachine->execute();
+	}
+
+	public function testExecuteWorks ()
 	{
 		Phake::when($this->state)->execute(Phake::anyParameters())->thenReturn('United state!');
+
 		$result = $this->stateMachine->execute();
 
 		Phake::verify($this->state)->execute();
@@ -58,7 +62,7 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 		$this->assertSame('United state!', $result);
 	}
 
-	public function testExecuteStateReceivesNewStateAndChangesToIt ()
+	public function testExecuteWorksAndChangesState ()
 	{
 		$new_state = Phake::mock('\Phur\StateMachine\IState');
 		Phake::when($new_state)->before(Phake::anyParameters())->thenReturn('New state!');
