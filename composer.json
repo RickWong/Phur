@@ -1,15 +1,16 @@
 {
     "name": "rickwong/Phur",
+    "version": "1.0.0",
     "description": "Phur – Phur helps u refactor",
-    "keywords": ["patterns", "framework", "factory", "fsm", "statemachine"],
     "homepage": "https://github.com/RickWong/Phur",
+    "license": "BSD-2-Clause",
     "authors": [
         {
             "name": "Rick Wong",
             "email": "rick@webambition.nl"
         }
     ],
-    "license": "BSD-2-Clause",
+    "keywords": ["patterns", "framework", "factory", "fsm", "statemachine", "chain", "strategy"],
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
         "phake/phake": "dev-master"
