@@ -2,14 +2,14 @@
 /**
  * @author Rick Wong <rick@webambition.nl>
  */
-namespace Phur\Factory;
+namespace Phur\AbstractFactory;
 
 class Factory
 {
 	/**
 	 * @var string
 	 */
-	protected $productInterface = '\Phur\Factory\IProduct';
+	protected $productInterface = '\Phur\AbstractFactory\IProduct';
 
 	/**
 	 * @var array
@@ -30,7 +30,7 @@ class Factory
 	 *
 	 * @return object
 	 *
-	 * @throws \Phur\Factory\Exception
+	 * @throws \Phur\AbstractFactory\Exception
 	 */
 	public function create ($productClassName, $constructorArg1 = NULL /*, ...*/)
 	{

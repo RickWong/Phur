@@ -5,18 +5,18 @@
 class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var \Phur\Factory\Factory
+	 * @var \Phur\AbstractFactory\Factory
 	 */
 	public $factory;
 
 	public function setUp ()
 	{
-		$this->factory = Phake::partialMock('\Phur\Factory\Factory', 'default');
+		$this->factory = Phake::partialMock('\Phur\AbstractFactory\Factory', 'default');
 	}
 
 	public function testCreateFailsWithNonIProduct ()
 	{
-		$this->setExpectedException('\Phur\Factory\Exception', 'must implement interface \Phur\Factory\IProduct');
+		$this->setExpectedException('\Phur\AbstractFactory\Exception', 'must implement interface \Phur\AbstractFactory\IProduct');
 
 		$this->factory->create('stdClass');
 	}
@@ -40,7 +40,7 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 	}
 }
 
-class Phur_Factory_TestProduct implements \Phur\Factory\IProduct
+class Phur_Factory_TestProduct implements \Phur\AbstractFactory\IProduct
 {
 	public function __construct() {}
 }

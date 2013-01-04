@@ -2,7 +2,7 @@
 /**
  * @author Rick Wong <rick@webambition.nl>
  */
-namespace Phur\Factory;
+namespace Phur\AbstractFactory;
 
 interface IProduct
 {
