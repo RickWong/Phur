@@ -13,6 +13,8 @@ class Proxy
 
 	/**
 	 * @param object $target
+	 *
+	 * @throws \Phur\Proxy\Exception
 	 */
 	public function __construct ($target)
 	{
