@@ -9,7 +9,7 @@ class Factory
 	/**
 	 * @var string
 	 */
-	protected $productInterface = '\Phur\AbstractFactory\IProduct';
+	protected $moreSpecificInterface = '\Phur\AbstractFactory\IProduct';
 
 	/**
 	 * @var array
@@ -34,14 +34,24 @@ class Factory
 	 */
 	public function create ($productClassName, $constructorArg1 = NULL /*, ...*/)
 	{
-		if (!is_subclass_of($productClassName, $this->productInterface))
+		if (!$this->isValidProductClassName($productClassName))
 		{
-			throw new Exception("$productClassName must implement interface $this->productInterface!");
+			throw new Exception("$productClassName must implement interface $this->moreSpecificInterface!");
 		}
 
 		$constructorArgs = array_slice(func_get_args(), 1);
 
 		return $this->_newInstance($productClassName, array_merge($this->defaultConstructorArgs, $constructorArgs));
+	}
+
+	/**
+	 * @param string $productClassName
+	 *
+	 * @return bool
+	 */
+	public function isValidProductClassName ($productClassName)
+	{
+		return is_string($productClassName) && is_subclass_of($productClassName, $this->moreSpecificInterface);
 	}
 
 	/**

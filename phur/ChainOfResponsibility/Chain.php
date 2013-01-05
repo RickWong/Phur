@@ -9,17 +9,17 @@ class Chain
 	/**
 	 * @var string
 	 */
-	protected $processorInterface = '\Phur\ChainOfResponsibility\IProcessor';
+	protected $moreSpecificInterface = '\Phur\ChainOfResponsibility\IProcessor';
 
 	/**
-	 * @var object[]
+	 * @var IProcessor[]
 	 */
 	protected $processors = array();
 
 	/**
-	 * @param object $processor1,...
+	 * @param IProcessor $processor1,...
 	 */
-	public function __construct ($processor1 = NULL /*, ...*/)
+	public function __construct (IProcessor $processor1 = NULL /*, ...*/)
 	{
 		foreach (func_get_args() as $processor)
 		{
@@ -28,17 +28,17 @@ class Chain
 	}
 
 	/**
-	 * @param object $processor
+	 * @param IProcessor $processor
 	 *
 	 * @return int
 	 *
 	 * @throws \Phur\ChainOfResponsibility\Exception
 	 */
-	public function addProcessor ($processor)
+	public function addProcessor (IProcessor $processor)
 	{
-		if (!$processor instanceof $this->processorInterface)
+		if (!$this->isValidProcessor($processor))
 		{
-			throw new Exception(get_class($processor)." must implement interface $this->processorInterface!");
+			throw new Exception(get_class($processor)." must implement interface $this->moreSpecificInterface!");
 		}
 
 		$this->processors[] = $processor;
@@ -65,7 +65,7 @@ class Chain
 
 	/**
 	 * @param mixed    $command
-	 * @param object[] $processors
+	 * @param IProcessor[] $processors
 	 *
 	 * @return bool
 	 */
@@ -81,7 +81,7 @@ class Chain
 			{
 				return TRUE;
 			}
-			elseif (is_object($result) && $result instanceof $this->processorInterface)
+			elseif ($this->isValidProcessor($result))
 			{
 				$appendedProcessors[] = $result;
 			}
@@ -93,5 +93,15 @@ class Chain
 		}
 
 		return FALSE;
+	}
+
+	/**
+	 * @param object $object
+	 *
+	 * @return bool
+	 */
+	public function isValidProcessor ($object)
+	{
+		return is_object($object) && $object instanceof $this->moreSpecificInterface;
 	}
 }

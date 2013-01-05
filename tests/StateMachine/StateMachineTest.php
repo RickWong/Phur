@@ -25,13 +25,17 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 	{
 		$this->setExpectedException('\Phur\StateMachine\Exception', 'must implement interface \Phur\StateMachine\IState!');
 
-		$this->stateMachine->changeState(new stdClass);
+		$phakeStateMachine = Phake::mock('\Phur\StateMachine\StateMachine');
+		Phake::when($phakeStateMachine)->isValidState->thenReturn(FALSE);
+		Phake::when($phakeStateMachine)->changeState->thenCallParent();
+
+		$phakeStateMachine->changeState($this->state);
 	}
 
 	public function testChangeStateWorks ()
 	{
 		$new_state = Phake::mock('\Phur\StateMachine\IState');
-		Phake::when($new_state)->before(Phake::anyParameters())->thenReturn('New state!');
+		Phake::when($new_state)->before->thenReturn('New state!');
 
 		$result = $this->stateMachine->changeState($new_state);
 
@@ -43,7 +47,7 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 
 	public function testExecuteWorks ()
 	{
-		Phake::when($this->state)->execute(Phake::anyParameters())->thenReturn('United state!');
+		Phake::when($this->state)->execute->thenReturn('United state!');
 
 		$result = $this->stateMachine->execute();
 
@@ -55,8 +59,8 @@ class Phur_StateMachine_StateMachineTest extends PHPUnit_Framework_TestCase
 	public function testExecuteWorksAndChangesState ()
 	{
 		$new_state = Phake::mock('\Phur\StateMachine\IState');
-		Phake::when($new_state)->before(Phake::anyParameters())->thenReturn('New state!');
-		Phake::when($this->state)->execute(Phake::anyParameters())->thenReturn($new_state);
+		Phake::when($new_state)->before->thenReturn('New state!');
+		Phake::when($this->state)->execute->thenReturn($new_state);
 
 		$result = $this->stateMachine->execute();
 

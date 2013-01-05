@@ -17,7 +17,7 @@ class Phur_Strategy_StrategicBehaviorTest extends PHPUnit_Framework_TestCase
 	public function setUp ()
 	{
 		$this->strategy = Phake::mock('\Phur\Strategy\IStrategy');
-		Phake::when($this->strategy)->execute(Phake::anyParameters())->thenReturn('Profit!');
+		Phake::when($this->strategy)->execute->thenReturn('Profit!');
 
 		$this->behavior = new \Phur\Strategy\StrategicBehavior($this->strategy);
 	}
@@ -26,7 +26,11 @@ class Phur_Strategy_StrategicBehaviorTest extends PHPUnit_Framework_TestCase
 	{
 		$this->setExpectedException('\Phur\Strategy\Exception', 'must implement interface \Phur\Strategy\IStrategy!');
 
-		$this->behavior->changeStrategy(new stdClass);
+		$phakeStrategicBehavior = Phake::mock('\Phur\Strategy\StrategicBehavior');
+		Phake::when($phakeStrategicBehavior)->isValidStrategy->thenReturn(FALSE);
+		Phake::when($phakeStrategicBehavior)->changeStrategy->thenCallParent();
+
+		$phakeStrategicBehavior->changeStrategy($this->strategy);
 	}
 
 	public function testExecuteStrategy ()

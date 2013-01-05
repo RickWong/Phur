@@ -48,7 +48,11 @@ class Phur_ChainOfResponsibility_ChainTest extends PHPUnit_Framework_TestCase
 	{
 		$this->setExpectedException('\Phur\ChainOfResponsibility\Exception', 'must implement interface \Phur\ChainOfResponsibility\IProcessor!');
 
-		$this->chain->addProcessor(new stdClass);
+		$phakeChain = Phake::mock('\Phur\ChainOfResponsibility\Chain');
+		Phake::when($phakeChain)->isValidProcessor->thenReturn(FALSE);
+		Phake::when($phakeChain)->addProcessor->thenCallParent();
+
+		$phakeChain->addProcessor($this->processorTrue);
 	}
 
 	public function testAddProcessorWorks ()

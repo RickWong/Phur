@@ -9,33 +9,33 @@ class StateMachine
 	/**
 	 * @var string
 	 */
-	protected $stateInterface = '\Phur\StateMachine\IState';
+	protected $moreSpecificInterface = '\Phur\StateMachine\IState';
 
 	/**
-	 * @var object
+	 * @var IState
 	 */
 	protected $currentState;
 
 	/**
-	 * @param object $initialState
+	 * @param IState $initialState
 	 */
-	public function __construct ($initialState)
+	public function __construct (IState $initialState)
 	{
 		$this->changeState($initialState);
 	}
 
 	/**
-	 * @param object $newState
+	 * @param IState $newState
 	 *
 	 * @return mixed
 	 *
 	 * @throws \Phur\StateMachine\Exception
 	 */
-	public function changeState ($newState)
+	public function changeState (IState $newState)
 	{
-		if (!$newState instanceof $this->stateInterface)
+		if (!$this->isValidState($newState))
 		{
-			throw new Exception(get_class($newState)." must implement interface $this->stateInterface!");
+			throw new Exception(get_class($newState)." must implement interface $this->moreSpecificInterface!");
 		}
 
 		if ($this->currentState)
@@ -55,11 +55,21 @@ class StateMachine
 	{
 		$result = $this->currentState->execute();
 
-		if (is_object($result) && $result instanceof $this->stateInterface)
+		if ($this->isValidState($result))
 		{
 			return $this->changeState($result);
 		}
 
 		return $result;
+	}
+
+	/**
+	 * @param object $object
+	 *
+	 * @return bool
+	 */
+	public function isValidState ($object)
+	{
+		return is_object($object) && $object instanceof $this->moreSpecificInterface;
 	}
 }
