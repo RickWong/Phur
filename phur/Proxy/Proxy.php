@@ -4,26 +4,49 @@
  */
 namespace Phur\Proxy;
 
-class ObjectProxy
+class Proxy
 {
 	/**
-	 * @var object
+	 * @var string
+	 */
+	protected $moreSpecificInterface = '\Phur\Proxy\ITarget';
+
+	/**
+	 * @var ITarget
 	 */
 	protected $target;
 
 	/**
-	 * @param object $target
+	 * @param ITarget $target
+	 */
+	public function __construct (ITarget $target)
+	{
+		$this->setTarget($target);
+	}
+
+	/**
+	 * @param ITarget $target
 	 *
 	 * @throws \Phur\Proxy\Exception
 	 */
-	public function __construct ($target)
+	public function setTarget (ITarget $target)
 	{
-		if (!is_object($target))
+		if (!$this->isValidTarget($target))
 		{
-			throw new Exception('Target of \Phur\Proxy\ObjectProxy must be an object!');
+			throw new Exception(get_class($target)." must implement interface $this->moreSpecificInterface!");
 		}
 
 		$this->target = $target;
+	}
+
+	/**
+	 * @param ITarget $target
+	 *
+	 * @return bool
+	 */
+	public function isValidTarget (ITarget $target)
+	{
+		return $target instanceof $this->moreSpecificInterface;
 	}
 
 	/**
@@ -33,11 +56,6 @@ class ObjectProxy
 	 */
 	public function __get ($property)
 	{
-		if ($property == '__self')
-		{
-			return $this->target;
-		}
-
 		return $this->target->$property;
 	}
 
@@ -87,51 +105,53 @@ class ObjectProxy
 	}
 
 	/**
-	 * @param array $arguments
-	 *
 	 * @return mixed
 	 *
 	 * @throws \Phur\Proxy\Exception
 	 */
-	public function __invoke (array $arguments = array())
+	public function __invoke ()
 	{
-		if (is_callable($this->target))
+		if (!is_callable($this->target))
 		{
-			throw new Exception(get_class($this->target).'::__invoke() is not callable!');
+			throw new Exception(get_class($this->target).' is not callable!');
 		}
 
-		return call_user_func_array($this->target, $arguments);
+		return call_user_func_array($this->target, func_get_args());
 	}
 
 	/**
 	 * @return string
+	 *
+	 * @throws \Phur\Proxy\Exception
 	 */
 	public function __toString ()
 	{
+		if (!method_exists($this->target, '__toString'))
+		{
+			return get_class($this->target).'['.spl_object_hash($this->target).']';
+		}
+
 		return (string) $this->target;
 	}
 
 	/**
 	 * Sleep method
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function __sleep ()
 	{
-		return unserialize(serialize($this->target));
+		$this->target = serialize($this->target);
+
+		return array('target');
 	}
 
 	/**
-	 * Wake method
+	 * Wakeup method
 	 */
-	public function __wake ()
+	public function __wakeup ()
 	{
-		if (!method_exists($this->target, __FUNCTION__))
-		{
-			return;
-		}
-
-		$this->target->__wake();
+		$this->target = unserialize($this->target);
 	}
 
 	/**

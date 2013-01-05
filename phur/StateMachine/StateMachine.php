@@ -64,7 +64,7 @@ class StateMachine
 	}
 
 	/**
-	 * @param object $object
+	 * @param mixed $object
 	 *
 	 * @return bool
 	 */
