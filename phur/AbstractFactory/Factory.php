@@ -41,7 +41,7 @@ class Factory
 
 		$constructorArgs = array_slice(func_get_args(), 1);
 
-		return $this->_newInstance($productClassName, array_merge($this->defaultConstructorArgs, $constructorArgs));
+		return $this->newInstance($productClassName, array_merge($this->defaultConstructorArgs, $constructorArgs));
 	}
 
 	/**
@@ -60,7 +60,7 @@ class Factory
 	 *
 	 * @return object
 	 */
-	protected function _newInstance ($className, array $constructorArgs)
+	protected function newInstance ($className, array $constructorArgs)
 	{
 		$refClass = new \ReflectionClass($className);
 		return $refClass->newInstanceArgs($constructorArgs);

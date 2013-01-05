@@ -25,7 +25,7 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 	{
 		$result = $this->factory->create('Phur_Factory_TestProduct');
 
-		Phake::verify($this->factory)->_newInstance('Phur_Factory_TestProduct', array('default'));
+		Phake::verify($this->factory)->newInstance('Phur_Factory_TestProduct', array('default'));
 
 		$this->assertInstanceOf('Phur_Factory_TestProduct', $result);
 	}
@@ -34,7 +34,7 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 	{
 		$result = $this->factory->create('Phur_Factory_TestProduct', 'custom');
 
-		Phake::verify($this->factory)->_newInstance('Phur_Factory_TestProduct', array('default', 'custom'));
+		Phake::verify($this->factory)->newInstance('Phur_Factory_TestProduct', array('default', 'custom'));
 
 		$this->assertInstanceOf('Phur_Factory_TestProduct', $result);
 	}

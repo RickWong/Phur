@@ -60,7 +60,7 @@ class Chain
 			throw new Exception('Cannot execute a chain with zero processors!');
 		}
 
-		return $this->_executeProcessors($command, $this->processors);
+		return $this->executeProcessors($command, $this->processors);
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Chain
 	 *
 	 * @return bool
 	 */
-	protected function _executeProcessors ($command, array $processors)
+	protected function executeProcessors ($command, array $processors)
 	{
 		$appendedProcessors = array();
 
@@ -89,7 +89,7 @@ class Chain
 
 		if (count($appendedProcessors))
 		{
-			return $this->_executeProcessors($command, $appendedProcessors);
+			return $this->executeProcessors($command, $appendedProcessors);
 		}
 
 		return FALSE;
