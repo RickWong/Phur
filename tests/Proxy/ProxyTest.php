@@ -26,11 +26,7 @@ class Phur_Proxy_ProxyTest extends PHPUnit_Framework_TestCase
 	{
 		$this->setExpectedException('\Phur\Proxy\Exception', 'must be an object!');
 
-		$phakeProxy = Phake::mock('\Phur\Proxy\Proxy');
-		Phake::when($phakeProxy)->isValidTarget->thenReturn(FALSE);
-		Phake::when($phakeProxy)->setTarget->thenCallParent();
-
-		$phakeProxy->setTarget(array());
+		new \Phur\Proxy\Proxy('string');
 	}
 
 	public function testGet ()

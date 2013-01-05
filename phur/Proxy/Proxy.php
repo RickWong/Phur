@@ -16,16 +16,6 @@ class Proxy
 	 */
 	public function __construct ($target)
 	{
-		$this->setTarget($target);
-	}
-
-	/**
-	 * @param object $target
-	 *
-	 * @throws \Phur\Proxy\Exception
-	 */
-	public function setTarget ($target)
-	{
 		if (!is_object($target))
 		{
 			throw new Exception('Proxy target must be an object!');
