@@ -22,15 +22,15 @@ class Phur_Proxy_ProxyTest extends PHPUnit_Framework_TestCase
 		$this->object = new \Phur\Proxy\Proxy($this->target);
 	}
 
-	public function testSetTargetFailsWithNonITarget ()
+	public function testSetTargetFailsWithNonObject ()
 	{
-		$this->setExpectedException('\Phur\Proxy\Exception', 'must implement interface \Phur\Proxy\ITarget!');
+		$this->setExpectedException('\Phur\Proxy\Exception', 'must be an object!');
 
 		$phakeProxy = Phake::mock('\Phur\Proxy\Proxy');
 		Phake::when($phakeProxy)->isValidTarget->thenReturn(FALSE);
 		Phake::when($phakeProxy)->setTarget->thenCallParent();
 
-		$phakeProxy->setTarget($this->target);
+		$phakeProxy->setTarget(array());
 	}
 
 	public function testGet ()
@@ -77,7 +77,7 @@ class Phur_Proxy_ProxyTest extends PHPUnit_Framework_TestCase
 	{
 		$this->setExpectedException('\Phur\Proxy\Exception', 'is not callable!');
 
-		$phake = new \Phur\Proxy\Proxy(Phake::mock('\Phur\Proxy\ITarget'));
+		$phake = new \Phur\Proxy\Proxy(new stdClass);
 		$phake();
 	}
 
@@ -89,8 +89,8 @@ class Phur_Proxy_ProxyTest extends PHPUnit_Framework_TestCase
 
 	public function testToStringDefaultReturnsClassName ()
 	{
-		$phake = new \Phur\Proxy\Proxy(Phake::mock('\Phur\Proxy\ITarget'));
-		$this->assertContains('ITarget', (string) $phake);
+		$phake = new \Phur\Proxy\Proxy(Phake::mock(__CLASS__));
+		$this->assertContains(__CLASS__, (string) $phake);
 	}
 
 	public function testToString ()
@@ -123,7 +123,7 @@ class Phur_Proxy_ProxyTest extends PHPUnit_Framework_TestCase
 	}
 }
 
-class Phur_Proxy_TestProxy implements \Phur\Proxy\ITarget
+class Phur_Proxy_TestProxy
 {
 	public function func ($arg)
 	{

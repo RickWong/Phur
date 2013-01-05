@@ -64,12 +64,12 @@ class StateMachine
 	}
 
 	/**
-	 * @param mixed $object
+	 * @param mixed $state
 	 *
 	 * @return bool
 	 */
-	public function isValidState ($object)
+	public function isValidState ($state)
 	{
-		return is_object($object) && $object instanceof $this->moreSpecificInterface;
+		return is_object($state) && $state instanceof $this->moreSpecificInterface;
 	}
 }

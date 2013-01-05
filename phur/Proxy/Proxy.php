@@ -7,46 +7,31 @@ namespace Phur\Proxy;
 class Proxy
 {
 	/**
-	 * @var string
-	 */
-	protected $moreSpecificInterface = '\Phur\Proxy\ITarget';
-
-	/**
-	 * @var ITarget
+	 * @var object
 	 */
 	protected $target;
 
 	/**
-	 * @param ITarget $target
+	 * @param object $target
 	 */
-	public function __construct (ITarget $target)
+	public function __construct ($target)
 	{
 		$this->setTarget($target);
 	}
 
 	/**
-	 * @param ITarget $target
+	 * @param object $target
 	 *
 	 * @throws \Phur\Proxy\Exception
 	 */
-	public function setTarget (ITarget $target)
+	public function setTarget ($target)
 	{
-		if (!$this->isValidTarget($target))
+		if (!is_object($target))
 		{
-			throw new Exception(get_class($target)." must implement interface $this->moreSpecificInterface!");
+			throw new Exception('Proxy target must be an object!');
 		}
 
 		$this->target = $target;
-	}
-
-	/**
-	 * @param ITarget $target
-	 *
-	 * @return bool
-	 */
-	public function isValidTarget (ITarget $target)
-	{
-		return $target instanceof $this->moreSpecificInterface;
 	}
 
 	/**
