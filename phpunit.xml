@@ -10,4 +10,7 @@
 			<directory>Phur</directory>
 		</whitelist>
 	</filter>
+	<logging>
+		<log type="coverage-html" target="build/coverage" charset="UTF-8" highlight="true" />
+	</logging>
 </phpunit>
