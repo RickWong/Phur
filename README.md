@@ -1,7 +1,7 @@
 Phur — PHP 5.3. Design Pattern framework
 ----------------------------------------
 
-Phur is a PHP 5.3 Design Pattern framework. Phur (phur helps u refactor) obviously helps you refactor your code quickly, so you can build flexible, testable, and loosely-coupled software systems. Phur is NOT another PHP MVC framework. It only contains abstract classes and interfaces. Extend and implement the design patterns that you need.
+Phur is a PHP 5.3 Design Pattern framework. Phur (phur helps u refactor) obviously helps you refactor your code quickly, so you can build flexible, testable, and loosely-coupled software systems. Phur is NOT another PHP MVC framework. It only contains abstract classes and interfaces. Extend and implement the design patterns as you need.
 
 [![Build Status](https://secure.travis-ci.org/RickWong/Phur.png)](https://travis-ci.org/RickWong/Phur)
 
