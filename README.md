@@ -1,4 +1,6 @@
-What is Phur 
+[![Build Status](https://secure.travis-ci.org/RickWong/Phur.png)](http://travis-ci.org/RickWong/Phur)
+
+What is Phur
 ---------------------------------------
 
 Phur is a PHP 5.3 Design Pattern Framework. "Phur helps u refactor" your code quickly, so you can build flexible,
@@ -6,6 +8,9 @@ testable, and loosely-coupled software systems. Phur is NOT another PHP MVC fram
 classes and interfaces. Extend and implement the ones you need.
 
 More documentation coming soon!
+
+License
+-------
 
 Licensed under the BSD (Berkeley Software Distribution) License.
 Copyright (c) 2012, Rick Wong. All rights reserved.
