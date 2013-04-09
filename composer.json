@@ -1,7 +1,7 @@
 {
     "name": "RickWong/Phur",
-    "version": "1.0.0",
-    "description": "Phur - PHP 5.3 Design Pattern framework",
+    "version": "0.5.0",
+    "description": "Phur - PHP Software Design Patterns framework",
     "homepage": "https://github.com/RickWong/Phur",
     "license": "BSD-2-Clause",
     "authors": [
@@ -10,7 +10,7 @@
             "email": "rick@webambition.nl"
         }
     ],
-    "keywords": ["patterns", "framework", "factory", "fsm", "statemachine", "chain", "strategy"],
+    "keywords": ["phur", "design", "patterns", "framework", "factory", "fsm", "statemachine", "chain", "strategy", "proxy"],
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
         "phake/phake": "dev-master"
