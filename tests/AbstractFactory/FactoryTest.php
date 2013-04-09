@@ -11,10 +11,10 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 
 	public function setUp ()
 	{
-		$this->factory = Phake::partialMock('\Phur\AbstractFactory\Factory', 'default');
+		$this->factory = new \Phur\AbstractFactory\Factory(array('default'));
 	}
 
-	public function testCreateFailsWithNonIProduct ()
+	public function testCreateFailsIfClassDoesNotImplementIProduct ()
 	{
 		$this->setExpectedException('\Phur\AbstractFactory\Exception', 'must implement interface \Phur\AbstractFactory\IProduct');
 
@@ -23,24 +23,20 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 
 	public function testCreateWorksWithDefaultArguments ()
 	{
-		$result = $this->factory->create('Phur_Factory_TestProduct');
+		$result = $this->factory->create('Phur_Factory_Product');
 
-		Phake::verify($this->factory)->newInstance('Phur_Factory_TestProduct', array('default'));
-
-		$this->assertInstanceOf('Phur_Factory_TestProduct', $result);
+		$this->assertInstanceOf('Phur_Factory_Product', $result);
 	}
 
 	public function testCreateWorksWithAdditionalConstructorArguments ()
 	{
-		$result = $this->factory->create('Phur_Factory_TestProduct', 'custom');
+		$result = $this->factory->create('Phur_Factory_Product', array('custom'));
 
-		Phake::verify($this->factory)->newInstance('Phur_Factory_TestProduct', array('default', 'custom'));
-
-		$this->assertInstanceOf('Phur_Factory_TestProduct', $result);
+		$this->assertInstanceOf('Phur_Factory_Product', $result);
 	}
 }
 
-class Phur_Factory_TestProduct implements \Phur\AbstractFactory\IProduct
+class Phur_Factory_Product implements \Phur\AbstractFactory\IProduct
 {
 	public function __construct() {}
 }

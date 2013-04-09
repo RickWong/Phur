@@ -4,44 +4,93 @@
  */
 namespace Phur\AbstractFactory;
 
+/**
+ * The Abstract Factory. A factory that exists only for creating product objects
+ * that must implement its mandatory PHP interface. Using interfaces instead of
+ * inheritance makes the factory flexible, and the products abstract by definition.
+ * See example 1 and 2.
+ *
+ * Factories are great for Dependency Injection. Phurs Abstract Factory is able
+ * to pass dependencies down to its products through constructor injection. See
+ * example 3.
+ *
+ * @example (1) We can implement a Model_Factory that mandates the
+ *              IModel interface like this:
+ *
+ *            interface IModel
+ *            {
+ *            }
+ *
+ *            class Model_Factory extends \Phur\AbstractFactory\Factory
+ *            {
+ *                protected $productInterface = 'IModel';
+ *            }
+ *
+ *            class Blogpost implements IModel
+ *            {
+ *            }
+ *
+ * @example (2) We then use the above Model_Factory to create a Blogpost:
+ *
+ *            $modelFactory = new Model_Factory;
+ *            $modelFactory->create('Blogpost', array($database, 123));
+ *
+ *            // Same as
+ *            new Blogpost($database, 123);
+ *
+ * @example (3) Passing dependencies down to the Blogpost:
+ *
+ *          Product dependencies can be passed along like this:
+ *
+ *            $modelFactory = new Model_Factory(array($database, $dependency));
+ *            $modelFactory->create('Blogpost', 123);
+ *
+ *            // Same as
+ *            new Blogpost($database, $dependency, 123);
+ *
+ */
 class Factory
 {
 	/**
+     * A product interface that the factory mandates.
+     *
 	 * @var string
 	 */
-	protected $moreSpecificInterface = '\Phur\AbstractFactory\IProduct';
+	protected $productInterface = '\Phur\AbstractFactory\IProduct';
 
 	/**
+     * Product dependencies that are passed down to products by default on instantiation.
+     *
 	 * @var array
 	 */
-	protected $defaultConstructorArgs = array();
+	protected $productDependencies;
 
 	/**
-	 * @param mixed $defaultConstructorArg1,...
+     * Constructor can be used to set product dependencies.
+     *
+	 * @param array $productDependencies
 	 */
-	public function __construct ($defaultConstructorArg1 = NULL /*, ...*/)
+	public function __construct (array $productDependencies = array())
 	{
-		$this->defaultConstructorArgs = func_get_args();
+		$this->productDependencies = $productDependencies;
 	}
 
 	/**
 	 * @param string $productClassName
-	 * @param mixed  $constructorArg1,...
+	 * @param array  $additionalDependencies
 	 *
 	 * @return object
 	 *
 	 * @throws \Phur\AbstractFactory\Exception
 	 */
-	public function create ($productClassName, $constructorArg1 = NULL /*, ...*/)
+	public function create ($productClassName, array $additionalDependencies = array())
 	{
 		if (!$this->isValidProductClassName($productClassName))
 		{
-			throw new Exception("$productClassName must implement interface $this->moreSpecificInterface!");
+			throw new Exception("$productClassName must implement interface $this->productInterface!");
 		}
 
-		$constructorArgs = array_slice(func_get_args(), 1);
-
-		return $this->newInstance($productClassName, array_merge($this->defaultConstructorArgs, $constructorArgs));
+		return $this->newInstance($productClassName, array_merge($this->productDependencies, $additionalDependencies));
 	}
 
 	/**
@@ -51,7 +100,7 @@ class Factory
 	 */
 	public function isValidProductClassName ($productClassName)
 	{
-		return is_string($productClassName) && is_subclass_of($productClassName, $this->moreSpecificInterface);
+		return is_string($productClassName) && is_subclass_of($productClassName, $this->productInterface);
 	}
 
 	/**
@@ -63,6 +112,7 @@ class Factory
 	protected function newInstance ($className, array $constructorArgs)
 	{
 		$refClass = new \ReflectionClass($className);
+
 		return $refClass->newInstanceArgs($constructorArgs);
 	}
 }
