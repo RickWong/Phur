@@ -76,6 +76,8 @@ class Factory
 	}
 
 	/**
+     * Create a new product optionally with additional dependencies.
+     *
 	 * @param string $productClassName
 	 * @param array  $additionalDependencies
 	 *
@@ -94,6 +96,8 @@ class Factory
 	}
 
 	/**
+     * Validate product class.
+     *
 	 * @param string $productClassName
 	 *
 	 * @return bool
@@ -103,16 +107,25 @@ class Factory
 		return is_string($productClassName) && is_subclass_of($productClassName, $this->productInterface);
 	}
 
-	/**
-	 * @param string $className
-	 * @param array  $constructorArgs
-	 *
-	 * @return object
-	 */
+    /**
+     * Protected method to instantiate a product.
+     *
+     * @param string $className
+     * @param array $constructorArgs
+     *
+     * @return object
+     *
+     * @throws \Phur\AbstractFactory\Exception
+     */
 	protected function newInstance ($className, array $constructorArgs)
 	{
 		$refClass = new \ReflectionClass($className);
 
-		return $refClass->newInstanceArgs($constructorArgs);
+        if (!$refClass->getConstructor() && count($constructorArgs))
+        {
+            throw new Exception("$className constructor does not accept dependencies!");
+        }
+
+        return $refClass->newInstanceArgs($constructorArgs);
 	}
 }

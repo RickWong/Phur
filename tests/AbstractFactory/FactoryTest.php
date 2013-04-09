@@ -11,36 +11,58 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 
 	public function setUp ()
 	{
-		$this->factory = Phake::partialMock('\Phur\AbstractFactory\Factory', array('default'));
+		$this->factory = Phake::partialMock('Phone_Factory', array('touchscreen'));
 	}
 
-	public function testCreateFailsIfClassDoesNotImplementIProduct ()
-	{
-		$this->setExpectedException('\Phur\AbstractFactory\Exception', 'must implement interface \Phur\AbstractFactory\IProduct');
+    public function testCreateFailsIfClassDoesNotImplementIProduct ()
+    {
+        $this->setExpectedException('\Phur\AbstractFactory\Exception', 'must implement interface IPhone');
 
-		$this->factory->create('stdClass');
+        $this->factory->create('stdClass');
+    }
+
+    public function testCreateFailsIfClassLacksConstructorButDependencyGiven ()
+    {
+        $this->setExpectedException('\Phur\AbstractFactory\Exception', 'constructor does not accept dependencies');
+
+        $this->factory->create('Dumb_Phone');
+    }
+
+    public function testCreateWorksWithDependency ()
+	{
+		$result = $this->factory->create('Smart_Phone');
+
+		$this->assertInstanceOf('Smart_Phone', $result);
+
+        Phake::verify($this->factory)->newInstance('Smart_Phone', array('touchscreen'));
 	}
 
-	public function testCreateWorksWithDefaultArguments ()
+	public function testCreateWorksWithAdditionalDependency ()
 	{
-		$result = $this->factory->create('Phur_Factory_Product');
+		$result = $this->factory->create('Smart_Phone', array('wifi'));
 
-		$this->assertInstanceOf('Phur_Factory_Product', $result);
+		$this->assertInstanceOf('Smart_Phone', $result);
 
-        Phake::verify($this->factory)->newInstance('Phur_Factory_Product', array('default'));
-	}
-
-	public function testCreateWorksWithAdditionalConstructorArguments ()
-	{
-		$result = $this->factory->create('Phur_Factory_Product', array('custom'));
-
-		$this->assertInstanceOf('Phur_Factory_Product', $result);
-
-        Phake::verify($this->factory)->newInstance('Phur_Factory_Product', array('default', 'custom'));
+        Phake::verify($this->factory)->newInstance('Smart_Phone', array('touchscreen', 'wifi'));
 	}
 }
 
-class Phur_Factory_Product implements \Phur\AbstractFactory\IProduct
+class Phone_Factory extends \Phur\AbstractFactory\Factory
 {
-	public function __construct () {}
+    protected $productInterface = 'IPhone';
+}
+
+interface IPhone
+{
+}
+
+class Smart_Phone implements IPhone
+{
+    public function __construct ($dependencies)
+    {
+    }
+}
+
+class Dumb_Phone implements IPhone
+{
 }

@@ -6,8 +6,4 @@ namespace Phur\AbstractFactory;
 
 interface IProduct
 {
-	/**
-	 * Public constructor
-	 */
-	public function __construct ();
 }
