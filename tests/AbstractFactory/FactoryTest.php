@@ -11,7 +11,7 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 
 	public function setUp ()
 	{
-		$this->factory = new \Phur\AbstractFactory\Factory(array('default'));
+		$this->factory = Phake::partialMock('\Phur\AbstractFactory\Factory', array('default'));
 	}
 
 	public function testCreateFailsIfClassDoesNotImplementIProduct ()
@@ -26,6 +26,8 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 		$result = $this->factory->create('Phur_Factory_Product');
 
 		$this->assertInstanceOf('Phur_Factory_Product', $result);
+
+        Phake::verify($this->factory)->newInstance('Phur_Factory_Product', array('default'));
 	}
 
 	public function testCreateWorksWithAdditionalConstructorArguments ()
@@ -33,10 +35,12 @@ class Phur_Factory_FactoryTest extends PHPUnit_Framework_TestCase
 		$result = $this->factory->create('Phur_Factory_Product', array('custom'));
 
 		$this->assertInstanceOf('Phur_Factory_Product', $result);
+
+        Phake::verify($this->factory)->newInstance('Phur_Factory_Product', array('default', 'custom'));
 	}
 }
 
 class Phur_Factory_Product implements \Phur\AbstractFactory\IProduct
 {
-	public function __construct() {}
+	public function __construct () {}
 }
