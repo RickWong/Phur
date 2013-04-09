@@ -1,7 +1,7 @@
 {
-    "name": "rickwong/Phur",
+    "name": "RickWong/Phur",
     "version": "1.0.0",
-    "description": "Phur – Phur helps u refactor",
+    "description": "Phur - PHP 5.3 Design Pattern framework",
     "homepage": "https://github.com/RickWong/Phur",
     "license": "BSD-2-Clause",
     "authors": [
