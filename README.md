@@ -13,7 +13,9 @@ Currently implemented:
 
 More design patterns & documentation coming soon!
 
-License
--------
+### Installation via Composer
+    composer require rickwong/phur dev-master
+
+### License and copyright
 Licensed under the BSD (Berkeley Software Distribution) License.
 Copyright (c) 2012, Rick Wong. All rights reserved.
