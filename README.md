@@ -15,6 +15,8 @@ More design patterns & documentation coming soon!
 
 ### Installation via Composer
     composer require rickwong/phur dev-master
+    
+https://packagist.org/packages/rickwong/phur
 
 ### License and copyright
 Licensed under the BSD (Berkeley Software Distribution) License.
