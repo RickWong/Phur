@@ -4,10 +4,11 @@
  */
 namespace Phur\Composite;
 
-class Composite extends \ArrayObject
+class Collection extends \ArrayObject
 {
     /**
      * @param string $property
+     * @throws \Phur\Composite\Exception
      * @return array
      */
     public function __get($property)
@@ -15,6 +16,10 @@ class Composite extends \ArrayObject
         $result = array();
 
         foreach ($this->getIterator() as $index => $component) {
+            if (!is_object($component)) {
+                throw new Exception("Trying to get $$property property from non-object at $index");
+            }
+
             $result[$index] = $component->$property;
         }
 
@@ -24,10 +29,15 @@ class Composite extends \ArrayObject
     /**
      * @param string $property
      * @param mixed $value
+     * @throws \Phur\Composite\Exception
      */
     public function __set($property, $value)
     {
-        foreach ($this->getIterator() as $component) {
+        foreach ($this->getIterator() as $index => $component) {
+            if (!is_object($component)) {
+                throw new Exception("Trying to set $$property property on non-object at $index");
+            }
+
             $component->$property = $value;
         }
     }
@@ -38,6 +48,10 @@ class Composite extends \ArrayObject
      */
     public function __isset($property)
     {
+        if (!count($this)) {
+            return false;
+        }
+
         foreach ($this->getIterator() as $component) {
             if (!isset($component->$property)) {
                 return false;
@@ -118,7 +132,7 @@ class Composite extends \ArrayObject
         $results = array();
 
         foreach ($this->getIterator() as $index => $component) {
-            if (!method_exists($component, $method) && !method_exists($this->target, '__call')) {
+            if (!method_exists($component, $method) && !method_exists($component, '__call')) {
                 throw new Exception(get_class($component) . "::$method() is not callable!");
             }
 
@@ -129,15 +143,15 @@ class Composite extends \ArrayObject
     }
 
     /**
-     * @param callable $method
+     * @param callable $callable
      * @return array
      */
-    public function map(callable $method)
+    public function map($callable)
     {
         $results = array();
 
-        foreach ($this->getIterator() as $index => &$component) {
-            $result[$index] = $method($component, $index);
+        foreach ($this->getIterator() as $index => $component) {
+            $results[$index] = $callable($component, $index);
         }
 
         return $results;
