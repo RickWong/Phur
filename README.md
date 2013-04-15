@@ -6,6 +6,7 @@ Phur is a framework for Software Design Patterns, written in PHP 5.3. Phur (Phur
 
 Currently implemented:
 * Abstract Factory
+* Builder
 * Chain of Responsibility
 * Composite
 * Proxy
