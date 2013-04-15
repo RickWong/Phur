@@ -134,7 +134,7 @@ class Phur_Composite_CompositeTest extends PHPUnit_Framework_TestCase
         $this->collection[] = (object)array('prop' => 'value1');
         $this->collection[] = (object)array('prop' => 'value2');
 
-        $this->assertSame($this->collection[1], $this->collection->search('prop', 'value2'));
+        $this->assertSame(1, $this->collection->search('prop', 'value2'));
     }
 
     public function testMagicCallThrowsException()

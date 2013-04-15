@@ -108,14 +108,14 @@ class Collection extends \ArrayObject
      * @param string $property
      * @param mixed $needle
      * @param bool $strict
-     * @return object
+     * @return mixed $key
      */
     public function search($property, $needle, $strict = true)
     {
         $results = $this->$property;
 
         if ($index = array_search($needle, $results, $strict)) {
-            return $this[$index];
+            return $index;
         }
 
         return null;
