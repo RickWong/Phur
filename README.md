@@ -7,11 +7,12 @@ Phur is a framework for Software Design Patterns, written in PHP 5.3. Phur (Phur
 Currently implemented:
 * Abstract Factory
 * Chain of Responsibility
+* Composite
 * Proxy
-* Finit State Machine
+* Finite State Machine
 * Strategy
 
-More design patterns & documentation coming soon!
+More design patterns & documentation coming soon in the first official release.
 
 ### Installation via Composer
     composer require rickwong/phur dev-master
