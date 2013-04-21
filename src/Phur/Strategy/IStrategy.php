@@ -6,10 +6,4 @@ namespace Phur\Strategy;
 
 interface IStrategy
 {
-    /**
-     * @param mixed $context
-     *
-     * @return mixed
-     */
-	public function execute ($context);
 }

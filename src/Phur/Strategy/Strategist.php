@@ -102,12 +102,13 @@ class Strategist
 	/**
      * Execute strategy with specified context.
      *
-	 * @param mixed $context
+	 * @param string $action
+	 * @param array $context
 	 *
 	 * @return mixed
 	 */
-	public function execute ($context)
+	public function __call ($action, array $context)
 	{
-		return call_user_func(array($this->currentStrategy, 'execute'), $context);
+		return call_user_func_array(array($this->currentStrategy, $action), $context);
 	}
 }

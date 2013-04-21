@@ -5,7 +5,7 @@
 class Phur_Strategy_StrategistTest extends PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var \Phur\Strategy\Strategist
+	 * @var \Phur\Strategy\Strategist|Revenue_Strategist
 	 */
 	public $strategist;
 
@@ -23,7 +23,7 @@ class Phur_Strategy_StrategistTest extends PHPUnit_Framework_TestCase
 
 	public function testExecuteStrategyWorks ()
 	{
-		$result = $this->strategist->execute(123);
+		$result = $this->strategist->predictProfit(123);
 
 		$this->assertSame('Profit: $123', $result);
 	}
@@ -32,12 +32,15 @@ class Phur_Strategy_StrategistTest extends PHPUnit_Framework_TestCase
 	{
         $this->strategist->changeStrategy(new DoubleProfit_Strategy());
 
-        $result = $this->strategist->execute(123);
+        $result = $this->strategist->predictProfit(123);
 
         $this->assertSame('Profit: $246', $result);
 	}
 }
 
+/**
+ * @method string predictProfit
+ */
 class Revenue_Strategist extends \Phur\Strategy\Strategist
 {
     protected $strategyInterface = 'IRevenue';
@@ -49,7 +52,7 @@ interface IRevenue extends \Phur\Strategy\IStrategy
 
 class Profit_Strategy implements IRevenue
 {
-    public function execute ($context)
+    public function predictProfit ($context)
     {
         return "Profit: $$context";
     }
@@ -57,7 +60,7 @@ class Profit_Strategy implements IRevenue
 
 class DoubleProfit_Strategy implements IRevenue
 {
-    public function execute ($context)
+    public function predictProfit ($context)
     {
         $context *= 2;
         return "Profit: $$context";
