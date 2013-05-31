@@ -10,7 +10,7 @@
             "email": "rick@webambition.nl"
         }
     ],
-    "keywords": ["phur", "design", "patterns", "framework", "factory", "fsm", "state", "machine", "chain", "strategy", "proxy", "builder", "composite", "collection"],
+    "keywords": ["phur", "design", "patterns", "framework", "factory", "fsm", "state", "machine", "chain", "strategy", "proxy", "builder", "composite", "collection", "validation", "rules"],
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
         "phake/phake": "dev-master"
