@@ -12,7 +12,7 @@ Currently implemented:
 * Proxy
 * Finite State Machine
 * Strategy
-* Rule Sets (recursive validation)
+* Validation rule sets
 
 More design patterns & documentation coming soon in the first official release.
 
