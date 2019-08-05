@@ -12,7 +12,7 @@
     ],
     "keywords": ["phur", "design", "patterns", "framework", "factory", "fsm", "state", "machine", "chain", "strategy", "proxy", "builder", "composite", "collection", "validation", "rules"],
     "require-dev": {
-        "phpunit/phpunit": "3.7.*",
+        "phpunit/phpunit": "8.3.*",
         "phake/phake": "dev-master"
     },
     "autoload": {
