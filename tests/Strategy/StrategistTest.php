@@ -1,7 +1,5 @@
 <?php
-/**
- * @author Rick Wong <rick@webambition.nl>
- */
+
 class Phur_Strategy_StrategistTest extends PHPUnit_Framework_TestCase
 {
 	/**

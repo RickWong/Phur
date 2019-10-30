@@ -1,9 +1,7 @@
 <?php
 namespace Phur\Validation;
 
-/**
- * @author Rick Wong <rick@webambition.nl>
- */
+
 class RuleSet implements IRule
 {
     /**

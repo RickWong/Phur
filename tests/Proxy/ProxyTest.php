@@ -1,7 +1,5 @@
 <?php
-/**
- * @author Rick Wong <rick@webambition.nl>
- */
+
 class Phur_Proxy_ProxyTest extends PHPUnit_Framework_TestCase
 {
 	/**

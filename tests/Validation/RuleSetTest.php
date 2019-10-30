@@ -1,7 +1,6 @@
 <?php
 /**
  * @group  validation
- * @author Rick Wong <rick@webambition.nl>
  */
 class Phur_Validation_RuleSetTest extends PHPUnit_Framework_TestCase
 {
