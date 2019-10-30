@@ -6,8 +6,7 @@
     "license": "BSD-2-Clause",
     "authors": [
         {
-            "name": "Rick Wong",
-            "email": "rick@webambition.nl"
+            "name": "Rick Wong"
         }
     ],
     "keywords": ["phur", "design", "patterns", "framework", "factory", "fsm", "state", "machine", "chain", "strategy", "proxy", "builder", "composite", "collection", "validation", "rules"],
